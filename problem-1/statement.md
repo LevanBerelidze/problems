@@ -5,6 +5,6 @@
 - For albums we simply display the title, for posts - the title and the body.
 - At the moment, we have two components to render the lists: **AlbumList** and **PostList**.
 - The problem is that the logic of fetching the items, filtering them and displaying them is duplicated.
-- Your task is to replace **AlbumList** and **PostList** components with one generic component and encapsulate the duplicated logic in one component.
+- Your task is to replace **AlbumList** and **PostList** components with one generic component and encapsulate the duplicated logic in it.
 
 Sandbox link: https://codesandbox.io/s/problem-1-4b0hm
