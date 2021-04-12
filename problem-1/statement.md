@@ -8,3 +8,5 @@
 - Your task is to replace **AlbumList** and **PostList** components with one generic component and encapsulate the duplicated logic in it.
 
 Sandbox link: https://codesandbox.io/s/problem-1-4b0hm
+
+Solution: https://codesandbox.io/s/problem-1-solution-ef3zm
