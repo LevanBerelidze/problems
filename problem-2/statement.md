@@ -30,7 +30,7 @@ _You can solve the problem:_
 
 _To test your solution (if you downloaded the project):_
 
-- Call `(POST) /accounts/:userId/balance?delta=:amount endpoint`
+- Call `(POST) /accounts/:userId/balance?delta=:amount` endpoint
 
 **OR**
 
