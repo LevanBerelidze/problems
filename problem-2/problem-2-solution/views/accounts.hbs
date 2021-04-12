@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accounts</title>
+
+	<script>
+		let firstForm, secondForm, balanceText, firstLoading, secondLoading, currentBalance, getForm;
+
+		window.addEventListener('load', () => {
+			firstForm = document.getElementById('firstForm');
+			secondForm = document.getElementById('secondForm');
+			balanceText = document.getElementById('balanceText');
+			firstLoading = document.getElementById('firstLoading');
+			secondLoading = document.getElementById('secondLoading');
+			getForm = document.getElementById('getForm');
+			currentBalance = document.getElementById('currentBalance');
+		});
+
+		async function submit(form) {
+			const [userIdInput, amountInput] = form.elements;
+			if (!userIdInput.value || !amountInput.value) {
+				return alert('Fill in the values before submitting!');
+			}
+
+			const userId = +userIdInput.value;
+			const amount = +amountInput.value;
+			await fetch(
+				`http://localhost:3000/accounts/${userId}/balance?delta=${amount}`,
+				{
+					method: 'POST',
+				},
+			);
+		}
+
+		function updateBalanceView(balanceView, updatedBalance) {
+			balanceView.innerHTML = updatedBalance.toString();
+		}
+
+		function onFirstSubmit() {
+			firstLoading.style.visibility = 'visible';
+			submit(firstForm).then(() => firstLoading.style.visibility = 'hidden');
+		}
+
+		function onSecondSubmit() {
+			secondLoading.style.visibility = 'visible';
+			submit(secondForm).then(() => secondLoading.style.visibility = 'hidden');
+		}
+
+		function onGetSubmit() {
+			const [userIdInput] = getForm.elements;
+			if (!userIdInput.value) {
+				return alert('Fill in the values before submitting!');
+			}
+
+			fetch(
+				`http://localhost:3000/accounts/${userIdInput.value}/balance`
+			)
+				.then(response => response.json())
+				.then(({ currentBalance: b }) => (currentBalance.innerHTML = b ?? '-'));
+		}
+	</script>
+</head>
+
+<body>
+
+	<div style="width: fit-content; margin: auto;">
+
+		<form id="firstForm" style="display: inline-block;">
+			<label for=" userId">User ID: </label>
+			<input type="number" id="userId" name="userId"><br><br>
+			<label for="amount">Amount</label>
+			<input type="number" id="amount" name="amount"><br><br>
+			<button type="button" onclick="onFirstSubmit()">Submit</button>
+			<p id="firstLoading" style="visibility: hidden;">Loading...</p>
+		</form>
+
+		<form id="secondForm" style="display: inline-block;">
+			<label for="userId">User ID: </label>
+			<input type="number" id="userId" name="userId"><br><br>
+			<label for="amount">Amount</label>
+			<input type="number" id="amount" name="amount"><br><br>
+			<button type="button" onclick="onSecondSubmit()">Submit</button>
+			<p id="secondLoading" style="visibility: hidden;">Loading...</p>
+		</form>
+
+	</div>
+
+	<div style="width: fit-content; margin: auto;">
+		<form id="getForm" style="display: inline-block;">
+			<label for="userId">User ID: </label>
+			<input type="number" id="userId" name="userId"><br><br>
+			<button type="button" onclick="onGetSubmit()">Submit</button>
+			<p>Balance: <span id="currentBalance"></span></p>
+		</form>
+	</div>
+
+</body>
+
+</html>
