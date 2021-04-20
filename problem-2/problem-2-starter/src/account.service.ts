@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Op } from 'sequelize';
 import { IUserBalanceModel } from './user-balance.model';
 
 @Injectable()
